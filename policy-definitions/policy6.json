@@ -1,0 +1,67 @@
+{
+    "name": "policy6",
+    "type": "Microsoft.Authorization/policyDefinitions",
+    "id": "/providers/Microsoft.Management/managementGroups/1e265494-869d-4d1e-8f63-ca8704d33218/providers/Microsoft.Authorization/policyDefinitions/policy6",
+    "properties": {
+        "displayName": "Add policy6 tag",
+        "description": "description: Adds the policy6 tag",
+        "policyType": "Custom",
+        "mode": "All",
+        "metadata": {
+            "version": "1.0.0",
+            "category": "my custom catgeory",
+            "hello": "blabla"
+        },
+        "parameters": {
+            "param_policy6_p61": {
+                "type": "String",
+                "allowedValues": [
+                    "p61"
+                ],
+                "defaultValue": "p61"
+            },
+            "param_policy6_p62": {
+                "type": "String",
+                "allowedValues": [
+                    "p62"
+                ],
+                "defaultValue": "p62"
+            }
+        },
+        "policyRule": {
+            "if": {
+                "allOf": [
+                    {
+                        "field": "type",
+                        "equals": "Microsoft.Resources/subscriptions/resourceGroups"
+                    }
+                ]
+            },
+            "then": {
+                "effect": "modify",
+                "details": {
+                    "roleDefinitionIds": [
+                        "/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c"
+                    ],
+                    "operations": [
+                        {
+                            "operation": "addOrReplace",
+                            "field": "tags['p61']",
+                            "value": "[parameters('param_policy6_p61')]"
+                        },
+                        {
+                            "operation": "addOrReplace",
+                            "field": "tags['p62']",
+                            "value": "[parameters('param_policy6_p62')]"
+                        },
+                        {
+                            "operation": "addOrReplace",
+                            "field": "tags['p63']",
+                            "value": "const_p63"
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}

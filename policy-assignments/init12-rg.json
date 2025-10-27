@@ -1,0 +1,38 @@
+{
+    "identity": {
+        "type": "SystemAssigned"
+    },
+    "properties": {
+        "name": "init12-rg",
+        "description": "this is a test description",
+        "displayName": "init12-rg deployed",
+        "enforcementMode": "Default",
+        "definitionVersion": "1.0.*",
+        "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/1e265494-869d-4d1e-8f63-ca8704d33218/providers/Microsoft.Authorization/policySetDefinitions/init12",
+        "id": "/subscriptions/7af7f18f-8d6a-4dcd-9374-4ff0208eb7c3/resourcegroups/test-rg/providers/Microsoft.Authorization/policyAssignments/assignment-name",
+        "scope": "/subscriptions/7af7f18f-8d6a-4dcd-9374-4ff0208eb7c3/resourcegroups/test-rg",
+        "location": "australiaeast",
+        "metadata": {
+            "a": "a",
+            "b": "b",
+            "parameterScopes": {}
+        },
+        "nonComplianceMessages": [
+            {
+                "message": "This is the default noncompliance message"
+            },
+            {
+                "message": "This is the noncomplicance message for policy1",
+                "policyDefinitionReferenceId": "Add policy1"
+            },
+            {
+                "message": "This is the noncomplicance message for policy2",
+                "policyDefinitionReferenceId": "Add policy2"
+            }
+        ],
+        "notScopes": [],
+        "parameters": {},
+        "resourceSelectors": [],
+        "overrides": []
+    }
+}

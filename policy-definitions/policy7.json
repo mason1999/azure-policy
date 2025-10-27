@@ -1,0 +1,68 @@
+{
+    "name": "policy7",
+    "type": "Microsoft.Authorization/policyDefinitions",
+    "id": "/providers/Microsoft.Management/managementGroups/1e265494-869d-4d1e-8f63-ca8704d33218/providers/Microsoft.Authorization/policyDefinitions/policy7",
+    "properties": {
+        "displayName": "Add policy7 tag",
+        "description": "description: Adds the policy7 tag",
+        "policyType": "Custom",
+        "mode": "All",
+        "metadata": {
+            "version": "1.0.0",
+            "category": "my custom catgeory",
+            "hello": "blabla"
+        },
+        "parameters": {
+            "param_policy7_p71": {
+                "type": "String",
+                "allowedValues": [
+                    "p71"
+                ],
+                "defaultValue": "p71"
+            },
+            "param_policy7_p72": {
+                "type": "String",
+                "allowedValues": [
+                    "p72"
+                ],
+                "defaultValue": "p72"
+            }
+        },
+        "policyRule": {
+            "if": {
+                "allOf": [
+                    {
+                        "field": "type",
+                        "equals": "Microsoft.Resources/subscriptions/resourceGroups"
+                    }
+                ]
+            },
+            "then": {
+                "effect": "modify",
+                "details": {
+                    "roleDefinitionIds": [
+                        "/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c",
+                        "/providers/Microsoft.Authorization/roleDefinitions/4d97b98b-1d4f-4787-a291-c67834d212e7"
+                    ],
+                    "operations": [
+                        {
+                            "operation": "addOrReplace",
+                            "field": "tags['p71']",
+                            "value": "[parameters('param_policy7_p71')]"
+                        },
+                        {
+                            "operation": "addOrReplace",
+                            "field": "tags['p72']",
+                            "value": "[parameters('param_policy7_p72')]"
+                        },
+                        {
+                            "operation": "addOrReplace",
+                            "field": "tags['p73']",
+                            "value": "const_p73"
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}

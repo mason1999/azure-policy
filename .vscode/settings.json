@@ -1,0 +1,28 @@
+{
+    "json.schemas": [
+        {
+            "fileMatch": [
+                "*web*.json"
+            ],
+            "url": "https://schema.management.azure.com/schemas/2020-10-01/policyDefinition.json"
+        },
+        {
+            "fileMatch": [
+                "policy-definitions/*.json"
+            ],
+            "url": ".vscode/schemas/policy-definition-schema.json"
+        },
+        {
+            "fileMatch": [
+                "policy-initiatives/*.json"
+            ],
+            "url": ".vscode/schemas/policy-initiative-schema.json"
+        },
+        {
+            "fileMatch": [
+                "policy-assignments/*.json"
+            ],
+            "url": ".vscode/schemas/policy-assignment-schema.json"
+        }
+    ]
+}

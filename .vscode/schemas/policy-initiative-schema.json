@@ -1,0 +1,214 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Azure Policy Initiative Schema",
+    "type": "object",
+    "required": [
+        "name",
+        "id",
+        "properties"
+    ],
+    "properties": {
+        "name": {
+            "type": "string"
+        },
+        "id": {
+            "type": "string",
+            "pattern": "^/subscriptions/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}/providers/Microsoft.Authorization/policySetDefinitions/.+|^/providers/Microsoft.Management/managementGroups/.*/providers/Microsoft.Authorization/policySetDefinitions/.+"
+        },
+        "properties": {
+            "type": "object",
+            "required": [
+                "policyDefinitions"
+            ],
+            "properties": {
+                "displayName": {
+                    "type": "string",
+                    "description": "A user-friendly name for the policy definition."
+                },
+                "description": {
+                    "type": "string",
+                    "description": "A detailed description of the policy."
+                },
+                "metadata": {
+                    "type": "object",
+                    "description": "Metadata about the policy definition, like version and category.",
+                    "properties": {
+                        "category": {
+                            "type": "string",
+                            "description": "category is a custom category for the policy definition."
+                        }
+                    },
+                    "additionalProperties": true
+                },
+                "version": {
+                    "type": "string",
+                    "pattern": "^[0-9]\\.[0-9]\\.[0-9]$",
+                    "description": "version of the initiative.",
+                    "enum": [
+                        "1.0.0"
+                    ]
+                },
+                "parameters": {
+                    "type": "object",
+                    "description": "Initiative parameters defined for this initiative definition. Keys will be the the parameters in the json code.",
+                    "additionalProperties": {
+                        "type": "object",
+                        "required": [
+                            "type"
+                        ],
+                        "properties": {
+                            "type": {
+                                "type": "string",
+                                "description": "The type for the parameter.",
+                                "enum": [
+                                    "String",
+                                    "Array",
+                                    "Object",
+                                    "Boolean",
+                                    "Integer",
+                                    "Float",
+                                    "DateTime"
+                                ]
+                            },
+                            "metadata": {
+                                "type": "object",
+                                "properties": {
+                                    "displayName": {
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    }
+                                },
+                                "additionalProperties": true
+                            },
+                            "allowedValues": {
+                                "type": "array"
+                            },
+                            "defaultValue": {}
+                        },
+                        "additionalProperties": true
+                    }
+                },
+                "policyDefinitions": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "policyDefinitionReferenceId": {
+                                "type": "string"
+                            },
+                            "policyDefinitionId": {
+                                "type": "string"
+                            },
+                            "parameters": {
+                                "type": "object",
+                                "description": "Input for a specific parameter associated with this policy.",
+                                "additionalProperties": {
+                                    "type": "object",
+                                    "required": [
+                                        "value"
+                                    ],
+                                    "properties": {
+                                        "value": {
+                                            "type": "string",
+                                            "description": "The value for the policy paramter."
+                                        }
+                                    },
+                                    "additionalProperties": true
+                                }
+                            },
+                            "definitionVersion": {
+                                "type": "string",
+                                "pattern": "^[0-9*]\\.[0-9*]\\.[0-9*]$"
+                            }
+                        },
+                        "required": [
+                            "policyDefinitionReferenceId",
+                            "policyDefinitionId"
+                        ],
+                        "additionalProperties": true
+                    },
+                    "minItems": 1
+                },
+                "policyDefinitionGroups": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "type": "string"
+                            },
+                            "category": {
+                                "type": "string"
+                            },
+                            "displayName": {
+                                "type": "string"
+                            },
+                            "description": {
+                                "type": "string"
+                            },
+                            "additionalMetaDataId": {
+                                "type": "string",
+                                "examples": [
+                                    "/providers/Microsoft.PolicyInsights/policyMetadata/NIST_SP_800-53_R4_AC-1"
+                                ]
+                            }
+                        },
+                        "minItems": 0
+                    }
+                }
+            }
+        },
+        "type": {
+            "type": "string",
+            "enum": [
+                "Microsoft.Authorization/policySetDefinitions"
+            ]
+        }
+    },
+    "if": {
+        "properties": {
+            "id": {
+                "pattern": "^/subscriptions/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}/providers/Microsoft.Authorization/policySetDefinitions/.+"
+            }
+        }
+    },
+    "then": {
+        "properties": {
+            "properties": {
+                "properties": {
+                    "policyDefinitions": {
+                        "type": "array",
+                        "items": {
+                            "properties": {
+                                "policyDefinitionId": {
+                                    "pattern": "^/subscriptions/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}/providers/Microsoft.Authorization/policyDefinitions/.+"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "else": {
+        "properties": {
+            "properties": {
+                "properties": {
+                    "policyDefinitions": {
+                        "type": "array",
+                        "items": {
+                            "properties": {
+                                "policyDefinitionId": {
+                                    "pattern": "^/subscriptions/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}/providers/Microsoft.Authorization/policyDefinitions/.+|^/providers/Microsoft.Management/managementGroups/.*/providers/Microsoft.Authorization/policyDefinitions/.+"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "additionalProperties": true
+}

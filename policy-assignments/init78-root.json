@@ -1,0 +1,38 @@
+{
+    "identity": {
+        "type": "SystemAssigned"
+    },
+    "properties": {
+        "name": "init78-mg",
+        "description": "this is a test description",
+        "displayName": "init78-mg deployed",
+        "enforcementMode": "Default",
+        "definitionVersion": "1.0.*",
+        "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/1e265494-869d-4d1e-8f63-ca8704d33218/providers/Microsoft.Authorization/policySetDefinitions/init78",
+        "id": "/providers/microsoft.management/managementgroups/1e265494-869d-4d1e-8f63-ca8704d33218/providers/Microsoft.Authorization/policyAssignments/assignment-name",
+        "scope": "/providers/microsoft.management/managementgroups/1e265494-869d-4d1e-8f63-ca8704d33218",
+        "location": "australiaeast",
+        "metadata": {
+            "a": "a",
+            "b": "b",
+            "parameterScopes": {}
+        },
+        "nonComplianceMessages": [
+            {
+                "message": "This is the default noncompliance message"
+            },
+            {
+                "message": "This is the noncomplicance message for policy7",
+                "policyDefinitionReferenceId": "Add policy7"
+            },
+            {
+                "message": "This is the noncomplicance message for policy8",
+                "policyDefinitionReferenceId": "Add policy8"
+            }
+        ],
+        "notScopes": [],
+        "parameters": {},
+        "resourceSelectors": [],
+        "overrides": []
+    }
+}

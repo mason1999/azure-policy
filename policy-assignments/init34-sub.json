@@ -1,0 +1,38 @@
+{
+    "identity": {
+        "type": "SystemAssigned"
+    },
+    "properties": {
+        "name": "init34-sub",
+        "description": "this is a test description",
+        "displayName": "init34-sub deployed",
+        "enforcementMode": "Default",
+        "definitionVersion": "1.0.*",
+        "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/1e265494-869d-4d1e-8f63-ca8704d33218/providers/Microsoft.Authorization/policySetDefinitions/init34",
+        "id": "/subscriptions/7af7f18f-8d6a-4dcd-9374-4ff0208eb7c3/providers/Microsoft.Authorization/policyAssignments/assignment-name",
+        "scope": "/subscriptions/7af7f18f-8d6a-4dcd-9374-4ff0208eb7c3",
+        "location": "australiaeast",
+        "metadata": {
+            "a": "a",
+            "b": "b",
+            "parameterScopes": {}
+        },
+        "nonComplianceMessages": [
+            {
+                "message": "This is the default noncompliance message"
+            },
+            {
+                "message": "This is the noncomplicance message for policy3",
+                "policyDefinitionReferenceId": "Add policy3"
+            },
+            {
+                "message": "This is the noncomplicance message for policy4",
+                "policyDefinitionReferenceId": "Add policy4"
+            }
+        ],
+        "notScopes": [],
+        "parameters": {},
+        "resourceSelectors": [],
+        "overrides": []
+    }
+}

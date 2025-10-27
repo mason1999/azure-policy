@@ -1,0 +1,67 @@
+{
+    "name": "policy3",
+    "type": "Microsoft.Authorization/policyDefinitions",
+    "id": "/providers/Microsoft.Management/managementGroups/1e265494-869d-4d1e-8f63-ca8704d33218/providers/Microsoft.Authorization/policyDefinitions/policy3",
+    "properties": {
+        "displayName": "Add policy3 tag",
+        "description": "description: Adds the policy3 tag",
+        "policyType": "Custom",
+        "mode": "All",
+        "metadata": {
+            "version": "1.0.0",
+            "category": "my custom catgeory",
+            "hello": "blabla"
+        },
+        "parameters": {
+            "param_policy3_p31": {
+                "type": "String",
+                "allowedValues": [
+                    "p31"
+                ],
+                "defaultValue": "p31"
+            },
+            "param_policy3_p32": {
+                "type": "String",
+                "allowedValues": [
+                    "p32"
+                ],
+                "defaultValue": "p32"
+            }
+        },
+        "policyRule": {
+            "if": {
+                "allOf": [
+                    {
+                        "field": "type",
+                        "equals": "Microsoft.Resources/subscriptions/resourceGroups"
+                    }
+                ]
+            },
+            "then": {
+                "effect": "modify",
+                "details": {
+                    "roleDefinitionIds": [
+                        "/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c"
+                    ],
+                    "operations": [
+                        {
+                            "operation": "addOrReplace",
+                            "field": "tags['p31']",
+                            "value": "[parameters('param_policy3_p31')]"
+                        },
+                        {
+                            "operation": "addOrReplace",
+                            "field": "tags['p32']",
+                            "value": "[parameters('param_policy3_p32')]"
+                        },
+                        {
+                            "operation": "addOrReplace",
+                            "field": "tags['p33']",
+                            "value": "const_p33"
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}

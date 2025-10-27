@@ -1,0 +1,970 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Azure Policy Definition Schema",
+    "type": "object",
+    "required": [
+        "name",
+        "id",
+        "properties"
+    ],
+    "properties": {
+        "name": {
+            "type": "string"
+        },
+        "id": {
+            "type": "string",
+            "pattern": "^/subscriptions/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}/providers/Microsoft.Authorization/policyDefinitions/.*|^/providers/Microsoft.Management/managementGroups/.*/providers/Microsoft.Authorization/policyDefinitions/.+"
+        },
+        "properties": {
+            "type": "object",
+            "required": [
+                "policyRule"
+            ],
+            "properties": {
+                "displayName": {
+                    "type": "string",
+                    "description": "A user-friendly name for the policy definition."
+                },
+                "description": {
+                    "type": "string",
+                    "description": "A detailed description of the policy."
+                },
+                "metadata": {
+                    "type": "object",
+                    "description": "Metadata about the policy definition, like version and category.",
+                    "properties": {
+                        "category": {
+                            "type": "string",
+                            "description": "category is a custom category for the policy definition."
+                        }
+                    },
+                    "additionalProperties": true
+                },
+                "mode": {
+                    "type": "string",
+                    "enum": [
+                        "All",
+                        "Indexed"
+                    ],
+                    "description": "The mode of the policy, such as 'All' or 'Indexed'."
+                },
+                "parameters": {
+                    "type": "object",
+                    "description": "Policy parameters defined for this policy definition. Keys will be the the parameters in the json code.",
+                    "additionalProperties": {
+                        "type": "object",
+                        "required": [
+                            "type"
+                        ],
+                        "properties": {
+                            "type": {
+                                "type": "string",
+                                "description": "The type for the parameter.",
+                                "enum": [
+                                    "String",
+                                    "Array",
+                                    "Object",
+                                    "Boolean",
+                                    "Integer",
+                                    "Float",
+                                    "DateTime"
+                                ]
+                            },
+                            "metadata": {
+                                "type": "object",
+                                "properties": {
+                                    "displayName": {
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    }
+                                },
+                                "additionalProperties": true
+                            },
+                            "allowedValues": {
+                                "type": "array"
+                            },
+                            "defaultValue": {}
+                        },
+                        "additionalProperties": true
+                    }
+                },
+                "policyRule": {
+                    "type": "object",
+                    "description": "Defines the rule logic of the policy.",
+                    "required": [
+                        "if",
+                        "then"
+                    ],
+                    "properties": {
+                        "if": {
+                            "oneOf": [
+                                {
+                                    "$ref": "#/definitions/condition"
+                                },
+                                {
+                                    "$ref": "#/definitions/operatorNot"
+                                },
+                                {
+                                    "$ref": "#/definitions/operatorAnyOf"
+                                },
+                                {
+                                    "$ref": "#/definitions/operatorAllOf"
+                                }
+                            ]
+                        },
+                        "then": {
+                            "type": "object",
+                            "properties": {
+                                "effect": {
+                                    "type": "string",
+                                    "enum": [
+                                        "append",
+                                        "audit",
+                                        "auditIfNotExists",
+                                        "deny",
+                                        "deployIfNotExists",
+                                        "manual",
+                                        "modify",
+                                        "disabled"
+                                    ]
+                                },
+                                "details": {
+                                    "oneOf": [
+                                        {
+                                            "$ref": "#/definitions/appendDetails"
+                                        },
+                                        {
+                                            "$ref": "#/definitions/ifNotExistsDetails"
+                                        },
+                                        {
+                                            "$ref": "#/definitions/modifyDetails"
+                                        },
+                                        {
+                                            "$ref": "#/definitions/manualDetails"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "additionalProperties": true
+                },
+                "policyType": {
+                    "type": "string",
+                    "enum": [
+                        "BuiltIn",
+                        "Custom",
+                        "NotSpecified"
+                    ],
+                    "description": "Specifies the type of policy (BuiltIn, Custom, or NotSpecified)."
+                }
+            },
+            "additionalProperties": true
+        },
+        "type": {
+            "type": "string",
+            "enum": [
+                "Microsoft.Authorization/policyDefinitions"
+            ]
+        }
+    },
+    "definitions": {
+        "appendDetails": {
+            "type": "array",
+            "items": {
+                "properties": {
+                    "field": {
+                        "$ref": "#/definitions/field"
+                    },
+                    "value": {
+                        "$ref": "#/definitions/templateExpression"
+                    }
+                },
+                "required": [
+                    "field",
+                    "value"
+                ],
+                "additionalProperties": false
+            },
+            "minItems": 1,
+            "additionalItems": false
+        },
+        "ifNotExistsDetails": {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "resourceGroupName": {
+                    "type": "string"
+                },
+                "existenceScope": {
+                    "type": "string",
+                    "enum": [
+                        "resourceGroup",
+                        "subscription"
+                    ]
+                },
+                "deploymentScope": {
+                    "type": "string",
+                    "enum": [
+                        "resourceGroup",
+                        "subscription"
+                    ]
+                },
+                "roleDefinitionIds": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "evaluationDelay": {
+                    "type": "string"
+                },
+                "existenceCondition": {
+                    "oneOf": [
+                        {
+                            "$ref": "#/definitions/condition"
+                        },
+                        {
+                            "$ref": "#/definitions/operatorNot"
+                        },
+                        {
+                            "$ref": "#/definitions/operatorAnyOf"
+                        },
+                        {
+                            "$ref": "#/definitions/operatorAllOf"
+                        }
+                    ]
+                },
+                "deployment": {
+                    "type": "object",
+                    "properties": {
+                        "properties": {
+                            "type": "object",
+                            "properties": {
+                                "debugSetting": {
+                                    "oneOf": [
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "detailLevel": {
+                                                    "type": "string",
+                                                    "description": "Specifies the type of information to log for debugging. The permitted values are none, requestContent, responseContent, or both requestContent and responseContent separated by a comma. The default is none. When setting this value, carefully consider the type of information you are passing in during deployment. By logging information about the request or response, you could potentially expose sensitive data that is retrieved through the deployment operations.",
+                                                    "enum": [
+                                                        "none",
+                                                        "requestContent",
+                                                        "responseContent",
+                                                        "requestContent,responseContent"
+                                                    ]
+                                                }
+                                            },
+                                            "examples": [
+                                                {
+                                                    "detailLevel": "none"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "$ref": "#/definitions/templateExpression"
+                                        }
+                                    ]
+                                },
+                                "mode": {
+                                    "oneOf": [
+                                        {
+                                            "type": "string",
+                                            "enum": [
+                                                "Incremental",
+                                                "Complete"
+                                            ],
+                                            "examples": [
+                                                "Incremental",
+                                                "Complete"
+                                            ]
+                                        },
+                                        {
+                                            "$ref": "#/definitions/templateExpression"
+                                        }
+                                    ],
+                                    "description": "The mode that is used to deploy resources. This value can be either Incremental or Complete. In Incremental mode, resources are deployed without deleting existing resources that are not included in the template. In Complete mode, resources are deployed and existing resources in the resource group that are not included in the template are deleted. Be careful when using Complete mode as you may unintentionally delete resources."
+                                },
+                                "onErrorDeployment": {
+                                    "oneOf": [
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "deploymentName": {
+                                                    "type": "string",
+                                                    "description": "The deployment to be used on error case."
+                                                },
+                                                "type": {
+                                                    "oneOf": [
+                                                        {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "LastSuccessful",
+                                                                "SpecificDeployment"
+                                                            ],
+                                                            "examples": [
+                                                                "LastSuccessful",
+                                                                "SpecificDeployment"
+                                                            ]
+                                                        },
+                                                        {
+                                                            "$ref": "#/definitions/templateExpression"
+                                                        }
+                                                    ],
+                                                    "description": "The deployment on error behavior type. Possible values are LastSuccessful and SpecificDeployment."
+                                                }
+                                            },
+                                            "description": "Deployment on error behavior.",
+                                            "examples": [
+                                                {
+                                                    "deploymentName": "myDeploymentName",
+                                                    "type": "SpecificDeployment"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "$ref": "#/definitions/templateExpression"
+                                        }
+                                    ],
+                                    "description": "Deployment on error behavior."
+                                },
+                                "parameters": {
+                                    "type": "object",
+                                    "properties": {},
+                                    "description": "Name and value pairs that define the deployment parameters for the template. You use this element when you want to provide the parameter values directly in the request rather than link to an existing parameter file. Use either the parametersLink property or the parameters property, but not both. It can be a JObject or a well formed JSON string."
+                                },
+                                "parametersLink": {
+                                    "oneOf": [
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "contentVersion": {
+                                                    "type": "string",
+                                                    "description": "If included, must match the ContentVersion in the template."
+                                                },
+                                                "uri": {
+                                                    "type": "string",
+                                                    "description": "The URI of the parameters file."
+                                                }
+                                            },
+                                            "required": [
+                                                "uri"
+                                            ],
+                                            "description": "Entity representing the reference to the deployment parameters.",
+                                            "examples": [
+                                                {
+                                                    "contentVersion": "template_content_version",
+                                                    "uri": "parameters_file_uri"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "$ref": "#/definitions/templateExpression"
+                                        }
+                                    ],
+                                    "description": "Entity representing the reference to the deployment parameters."
+                                },
+                                "template": {
+                                    "type": "object",
+                                    "properties": {},
+                                    "description": "The template content. You use this element when you want to pass the template syntax directly in the request rather than link to an existing template. It can be a JObject or well-formed JSON string. Use either the templateLink property or the template property, but not both."
+                                },
+                                "templateLink": {
+                                    "oneOf": [
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "contentVersion": {
+                                                    "type": "string",
+                                                    "description": "If included, must match the ContentVersion in the template."
+                                                },
+                                                "uri": {
+                                                    "type": "string",
+                                                    "description": "The URI of the template to deploy."
+                                                }
+                                            },
+                                            "required": [
+                                                "uri"
+                                            ],
+                                            "description": "Entity representing the reference to the template.",
+                                            "examples": [
+                                                {
+                                                    "contentVersion": "template_content_version",
+                                                    "uri": "parameters_file_uri"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "$ref": "#/definitions/templateExpression"
+                                        }
+                                    ],
+                                    "description": "Entity representing the reference to the template."
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "required": [
+                "type"
+            ],
+            "additionalProperties": false
+        },
+        "modifyDetails": {
+            "type": "object",
+            "properties": {
+                "conflictEffect": {
+                    "type": "string",
+                    "enum": [
+                        "audit",
+                        "deny"
+                    ],
+                    "examples": [
+                        "audit",
+                        "deny"
+                    ]
+                },
+                "roleDefinitionIds": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "uniqueItems": true
+                },
+                "operations": {
+                    "type": "array",
+                    "items": {
+                        "properties": {
+                            "operation": {
+                                "type": "string",
+                                "enum": [
+                                    "add",
+                                    "addOrReplace",
+                                    "remove"
+                                ]
+                            },
+                            "field": {
+                                "$ref": "#/definitions/field"
+                            },
+                            "value": {
+                                "$ref": "#/definitions/templateExpression"
+                            },
+                            "condition": {
+                                "$ref": "#/definitions/templateExpression"
+                            }
+                        },
+                        "required": [
+                            "operation",
+                            "field"
+                        ],
+                        "additionalProperties": false
+                    },
+                    "minItems": 1,
+                    "additionalItems": false,
+                    "examples": [
+                        [
+                            {
+                                "operation": "add",
+                                "field": "type",
+                                "condition": "[template_expression]"
+                            }
+                        ]
+                    ]
+                }
+            },
+            "required": [
+                "roleDefinitionIds",
+                "operations"
+            ],
+            "additionalProperties": false
+        },
+        "manualDetails": {
+            "type": "object",
+            "properties": {
+                "defaultState": {
+                    "oneOf": [
+                        {
+                            "type": "string",
+                            "enum": [
+                                "Compliant",
+                                "NonCompliant",
+                                "Unknown"
+                            ]
+                        },
+                        {
+                            "$ref": "#/definitions/templateExpression"
+                        }
+                    ]
+                }
+            },
+            "required": [
+                "defaultState"
+            ],
+            "additionalProperties": false
+        },
+        "countExpression": {
+            "oneOf": [
+                {
+                    "properties": {
+                        "field": {
+                            "$ref": "#/definitions/field"
+                        },
+                        "where": {
+                            "oneOf": [
+                                {
+                                    "$ref": "#/definitions/condition"
+                                },
+                                {
+                                    "$ref": "#/definitions/operatorNot"
+                                },
+                                {
+                                    "$ref": "#/definitions/operatorAnyOf"
+                                },
+                                {
+                                    "$ref": "#/definitions/operatorAllOf"
+                                }
+                            ]
+                        }
+                    },
+                    "required": [
+                        "field"
+                    ],
+                    "additionalProperties": false
+                },
+                {
+                    "properties": {
+                        "value": {
+                            "oneOf": [
+                                {
+                                    "type": "array"
+                                },
+                                {
+                                    "$ref": "#/definitions/templateExpression"
+                                }
+                            ]
+                        },
+                        "name": {
+                            "type": "string"
+                        },
+                        "where": {
+                            "oneOf": [
+                                {
+                                    "$ref": "#/definitions/condition"
+                                },
+                                {
+                                    "$ref": "#/definitions/operatorNot"
+                                },
+                                {
+                                    "$ref": "#/definitions/operatorAnyOf"
+                                },
+                                {
+                                    "$ref": "#/definitions/operatorAllOf"
+                                }
+                            ]
+                        }
+                    },
+                    "required": [
+                        "value"
+                    ],
+                    "additionalProperties": false
+                }
+            ]
+        },
+        "condition": {
+            "allOf": [
+                {
+                    "oneOf": [
+                        {
+                            "properties": {
+                                "source": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "source"
+                            ]
+                        },
+                        {
+                            "properties": {
+                                "field": {
+                                    "$ref": "#/definitions/field"
+                                }
+                            },
+                            "required": [
+                                "field"
+                            ]
+                        },
+                        {
+                            "properties": {
+                                "value": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "value"
+                            ]
+                        },
+                        {
+                            "properties": {
+                                "count": {
+                                    "$ref": "#/definitions/countExpression"
+                                }
+                            },
+                            "required": [
+                                "count"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "oneOf": [
+                        {
+                            "properties": {
+                                "equals": {
+                                    "type": [
+                                        "number",
+                                        "string"
+                                    ]
+                                }
+                            },
+                            "required": [
+                                "equals"
+                            ]
+                        },
+                        {
+                            "properties": {
+                                "notEquals": {
+                                    "type": [
+                                        "number",
+                                        "string"
+                                    ]
+                                }
+                            },
+                            "required": [
+                                "notEquals"
+                            ]
+                        },
+                        {
+                            "properties": {
+                                "like": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "like"
+                            ]
+                        },
+                        {
+                            "properties": {
+                                "notLike": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "notLike"
+                            ]
+                        },
+                        {
+                            "properties": {
+                                "contains": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "contains"
+                            ]
+                        },
+                        {
+                            "properties": {
+                                "notContains": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "notContains"
+                            ]
+                        },
+                        {
+                            "properties": {
+                                "in": {
+                                    "oneOf": [
+                                        {
+                                            "type": "array"
+                                        },
+                                        {
+                                            "type": "string"
+                                        }
+                                    ]
+                                }
+                            },
+                            "required": [
+                                "in"
+                            ]
+                        },
+                        {
+                            "properties": {
+                                "notIn": {
+                                    "oneOf": [
+                                        {
+                                            "type": "array"
+                                        },
+                                        {
+                                            "type": "string"
+                                        }
+                                    ]
+                                }
+                            },
+                            "required": [
+                                "notIn"
+                            ]
+                        },
+                        {
+                            "properties": {
+                                "containsKey": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "containsKey"
+                            ]
+                        },
+                        {
+                            "properties": {
+                                "notContainsKey": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "notContainsKey"
+                            ]
+                        },
+                        {
+                            "properties": {
+                                "match": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "match"
+                            ]
+                        },
+                        {
+                            "properties": {
+                                "matchInsensitively": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "matchInsensitively"
+                            ]
+                        },
+                        {
+                            "properties": {
+                                "notMatch": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "notMatch"
+                            ]
+                        },
+                        {
+                            "properties": {
+                                "notMatchInsensitively": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "notMatchInsensitively"
+                            ]
+                        },
+                        {
+                            "properties": {
+                                "exists": {
+                                    "type": [
+                                        "string",
+                                        "boolean"
+                                    ]
+                                }
+                            },
+                            "required": [
+                                "exists"
+                            ]
+                        },
+                        {
+                            "properties": {
+                                "greater": {
+                                    "type": [
+                                        "number",
+                                        "string"
+                                    ]
+                                }
+                            },
+                            "required": [
+                                "greater"
+                            ]
+                        },
+                        {
+                            "properties": {
+                                "less": {
+                                    "type": [
+                                        "number",
+                                        "string"
+                                    ]
+                                }
+                            },
+                            "required": [
+                                "less"
+                            ]
+                        },
+                        {
+                            "properties": {
+                                "greaterOrEquals": {
+                                    "type": [
+                                        "number",
+                                        "string"
+                                    ]
+                                }
+                            },
+                            "required": [
+                                "greaterOrEquals"
+                            ]
+                        },
+                        {
+                            "properties": {
+                                "lessOrEquals": {
+                                    "type": [
+                                        "number",
+                                        "string"
+                                    ]
+                                }
+                            },
+                            "required": [
+                                "lessOrEquals"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        "operatorNot": {
+            "properties": {
+                "not": {
+                    "oneOf": [
+                        {
+                            "$ref": "#/definitions/condition"
+                        },
+                        {
+                            "$ref": "#/definitions/operatorNot"
+                        },
+                        {
+                            "$ref": "#/definitions/operatorAnyOf"
+                        },
+                        {
+                            "$ref": "#/definitions/operatorAllOf"
+                        }
+                    ]
+                }
+            },
+            "required": [
+                "not"
+            ],
+            "additionalProperties": false
+        },
+        "operatorAnyOf": {
+            "properties": {
+                "anyOf": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                        "oneOf": [
+                            {
+                                "$ref": "#/definitions/condition"
+                            },
+                            {
+                                "$ref": "#/definitions/operatorNot"
+                            },
+                            {
+                                "$ref": "#/definitions/operatorAnyOf"
+                            },
+                            {
+                                "$ref": "#/definitions/operatorAllOf"
+                            }
+                        ]
+                    }
+                }
+            },
+            "required": [
+                "anyOf"
+            ],
+            "additionalProperties": false
+        },
+        "operatorAllOf": {
+            "properties": {
+                "allOf": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                        "oneOf": [
+                            {
+                                "$ref": "#/definitions/condition"
+                            },
+                            {
+                                "$ref": "#/definitions/operatorNot"
+                            },
+                            {
+                                "$ref": "#/definitions/operatorAnyOf"
+                            },
+                            {
+                                "$ref": "#/definitions/operatorAllOf"
+                            }
+                        ]
+                    }
+                }
+            },
+            "required": [
+                "allOf"
+            ],
+            "additionalProperties": false
+        },
+        "templateExpression": {
+            "type": "string",
+            "pattern": "^\\[([^\\[].*)?\\]$|^[a-zA-Z0-9_]*$",
+            "description": "Deployment template expression. See https://aka.ms/arm-template-expressions for more details on the ARM expression syntax.",
+            "examples": [
+                "[template_expression]"
+            ]
+        },
+        "field": {
+            "oneOf": [
+                {
+                    "type": "string",
+                    "examples": [
+                        "name",
+                        "fullName",
+                        "kind",
+                        "type",
+                        "location",
+                        "id",
+                        "identity.type",
+                        "tags",
+                        "tags['tag_name']"
+                    ]
+                },
+                {
+                    "$ref": "./providers/aliases.json"
+                }
+            ]
+        }
+    },
+    "additionalProperties": true
+}

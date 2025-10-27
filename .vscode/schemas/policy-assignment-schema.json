@@ -1,0 +1,536 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Azure Policy Assignment Schema",
+    "type": "object",
+    "required": [
+        "properties"
+    ],
+    "properties": {
+        "identity": {
+            "type": [
+                "object",
+                "null"
+            ],
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "enum": [
+                        "SystemAssigned",
+                        "UserAssigned"
+                    ]
+                },
+                "userAssignedIdentities": {
+                    "type": "object",
+                    "patternProperties": {
+                        "^/subscriptions/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}/resourceGroups/.+/providers/Microsoft.ManagedIdentity/userAssignedIdentities/.+": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "additionalProperties": true,
+            "if": {
+                "properties": {
+                    "type": {
+                        "const": "UserAssigned"
+                    }
+                }
+            },
+            "then": {
+                "required": [
+                    "userAssignedIdentities"
+                ]
+            }
+        },
+        "properties": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "Name of the policy assignment"
+                },
+                "id": {
+                    "type": "string",
+                    "pattern": "^/subscriptions/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}/resourcegroups/.+/providers/Microsoft.Authorization/policyAssignments/.+|^/subscriptions/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}/providers/Microsoft.Authorization/policyAssignments/.+|^/providers/microsoft.management/managementgroups/.+/providers/Microsoft.Authorization/policyAssignments/.+",
+                    "examples": [
+                        "/subscriptions/11111111-1111-1111-1111-111111111111/resourcegroups/rg-name/providers/Microsoft.Authorization/policyAssignments/assignment-name",
+                        "/subscriptions/11111111-1111-1111-1111-111111111111/providers/Microsoft.Authorization/policyAssignments/assignment-name",
+                        "/providers/microsoft.management/managementgroups/mg-id/providers/Microsoft.Authorization/policyAssignments/assignment-name"
+                    ]
+                },
+                "location": {
+                    "type": [
+                        "string",
+                        "null"
+                    ],
+                    "enum": [
+                        "australiaeast",
+                        null
+                    ]
+                },
+                "policyDefinitionId": {
+                    "type": "string",
+                    "pattern": "^/providers/Microsoft.Authorization/policy(Set)?Definitions/.+$|^/subscriptions/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}/providers/Microsoft.Authorization/policy(Set)?Definitions/.*|^/providers/Microsoft.Management/managementGroups/.*/providers/Microsoft.Authorization/policy(Set)?Definitions/.+"
+                },
+                "displayName": {
+                    "type": "string",
+                    "description": "Friendly name for assignment"
+                },
+                "description": {
+                    "type": "string",
+                    "description": "Description of assignment"
+                },
+                "definitionVersion": {
+                    "type": "string",
+                    "pattern": "^[0-9*]\\.[0-9*]\\.[0-9*]$",
+                    "description": "version of the assignment"
+                },
+                "metadata": {
+                    "type": "object",
+                    "description": "Metadata for the policy assignment."
+                },
+                "nonComplianceMessages": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "message": {
+                                "type": "string"
+                            },
+                            "policyDefinitionReferenceId": {
+                                "type": "string",
+                                "description": "The reference Id for the policy you created in your initiative. That is, the shortname / unique identifier."
+                            }
+                        }
+                    }
+                },
+                "enforcementMode": {
+                    "type": "string",
+                    "enum": [
+                        "Default",
+                        "DoNotEnforce"
+                    ]
+                },
+                "scope": {
+                    "type": "string",
+                    "pattern": "^/subscriptions/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}(/resourcegroups/.+)?$|^/providers/microsoft.management/managementgroups/.+",
+                    "examples": [
+                        "/subscriptions/11111111-1111-1111-1111-111111111111/resourcegroups/rg-name",
+                        "/subscriptions/11111111-1111-1111-1111-111111111111",
+                        "/providers/microsoft.management/managementgroups/mg-id"
+                    ]
+                },
+                "notScopes": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "pattern": "^/subscriptions/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}/resourcegroups/.+$|^/subscriptions/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$|/providers/microsoft.management/managementgroups/.+"
+                    },
+                    "examples": [
+                        [
+                            "/subscriptions/11111111-1111-1111-1111-111111111111/resourcegroups/rg-name",
+                            "/subscriptions/11111111-1111-1111-1111-111111111111",
+                            "/providers/Microsoft.Management/managementGroups/mg-id"
+                        ]
+                    ]
+                },
+                "parameters": {
+                    "type": "object",
+                    "description": "Parameters to match the policy definition or initiative.",
+                    "additionalProperties": {
+                        "type": "object",
+                        "required": [
+                            "type"
+                        ],
+                        "properties": {
+                            "value": {
+                                "type": "string",
+                                "description": "The value for the parameter."
+                            }
+                        },
+                        "additionalProperties": false
+                    }
+                },
+                "resourceSelectors": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "type": "string"
+                            },
+                            "selectors": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "kind": {
+                                            "type": "string",
+                                            "enum": [
+                                                "resourceType",
+                                                "resourceLocation",
+                                                "resourceWithoutLocation"
+                                            ]
+                                        },
+                                        "in": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        "notIn": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    },
+                                    "allOf": [
+                                        {
+                                            "if": {
+                                                "required": [
+                                                    "in"
+                                                ]
+                                            },
+                                            "then": {
+                                                "not": {
+                                                    "required": [
+                                                        "notIn"
+                                                    ]
+                                                }
+                                            }
+                                        },
+                                        {
+                                            "if": {
+                                                "required": [
+                                                    "notIn"
+                                                ]
+                                            },
+                                            "then": {
+                                                "not": {
+                                                    "required": [
+                                                        "in"
+                                                    ]
+                                                }
+                                            }
+                                        },
+                                        {
+                                            "if": {
+                                                "properties": {
+                                                    "kind": {
+                                                        "const": "resourceWithoutLocation"
+                                                    }
+                                                }
+                                            },
+                                            "then": {
+                                                "properties": {
+                                                    "in": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "subscriptionLevelResources"
+                                                            ]
+                                                        }
+                                                    },
+                                                    "notIn": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "subscriptionLevelResources"
+                                                            ]
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "examples": [
+                        [
+                            {
+                                "name": "SDP_Storage_Regions",
+                                "selectors": [
+                                    {
+                                        "kind": "resourceType",
+                                        "in": [
+                                            "Microsoft.Storage/storageAccounts"
+                                        ]
+                                    },
+                                    {
+                                        "kind": "resourceLocation",
+                                        "in": [
+                                            "australiaeast",
+                                            "australiasoutheast",
+                                            "australiacentral"
+                                        ]
+                                    },
+                                    {
+                                        "kind": "resourceWithoutLocation",
+                                        "notIn": [
+                                            "subscriptionLevelResources"
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "SDP_Network",
+                                "selectors": [
+                                    {
+                                        "kind": "resourceType",
+                                        "in": [
+                                            "Microsoft.Network/networkInterfaces",
+                                            "Microsoft.Network/networkSecurityGroups",
+                                            "Microsoft.Network/virtualNetworks",
+                                            "Microsoft.Network/routeTables"
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "SDP_VM",
+                                "selectors": [
+                                    {
+                                        "kind": "resourceType",
+                                        "in": [
+                                            "Microsoft.Compute/virtualMachineScaleSets",
+                                            "Microsoft.Compute/virtualMachines"
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "SDP_RG_regions",
+                                "selectors": [
+                                    {
+                                        "kind": "resourceType",
+                                        "in": [
+                                            "Microsoft.Resources/resourceGroups"
+                                        ]
+                                    },
+                                    {
+                                        "kind": "resourceLocation",
+                                        "in": [
+                                            "australiaeast"
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    ]
+                },
+                "overrides": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "kind": {
+                                "type": "string",
+                                "enum": [
+                                    "policyEffect",
+                                    "policyVersion"
+                                ]
+                            },
+                            "value": {
+                                "type": "string"
+                            },
+                            "selectors": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "kind": {
+                                            "type": "string",
+                                            "enum": [
+                                                "policyDefinitionReferenceId",
+                                                "resourceWithoutLocation",
+                                                "resourceLocation"
+                                            ]
+                                        },
+                                        "in": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        "notIn": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    },
+                                    "allOf": [
+                                        {
+                                            "if": {
+                                                "required": [
+                                                    "in"
+                                                ]
+                                            },
+                                            "then": {
+                                                "not": {
+                                                    "required": [
+                                                        "notIn"
+                                                    ]
+                                                }
+                                            }
+                                        },
+                                        {
+                                            "if": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "kind": {
+                                                        "type": "string",
+                                                        "const": "resourceWithoutLocation"
+                                                    }
+                                                }
+                                            },
+                                            "then": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "in": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "subscriptionLevelResources"
+                                                            ]
+                                                        },
+                                                        "enum": [
+                                                            [
+                                                                "subscriptionLevelResources"
+                                                            ]
+                                                        ]
+                                                    },
+                                                    "notIn": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "subscriptionLevelResources"
+                                                            ]
+                                                        },
+                                                        "enum": [
+                                                            [
+                                                                "subscriptionLevelResources"
+                                                            ]
+                                                        ]
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        },
+                        "allOf": [
+                            {
+                                "if": {
+                                    "properties": {
+                                        "kind": {
+                                            "const": "policyEffect"
+                                        }
+                                    }
+                                },
+                                "then": {
+                                    "properties": {
+                                        "value": {
+                                            "type": "string",
+                                            "enum": [
+                                                "Append",
+                                                "Audit",
+                                                "AuditIfNotExists",
+                                                "Deny",
+                                                "DenyAction",
+                                                "DeployIfNotExists",
+                                                "Disabled",
+                                                "Manual",
+                                                "Modify"
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        ]
+                    },
+                    "examples": [
+                        [
+                            {
+                                "kind": "policyEffect",
+                                "value": "Disabled",
+                                "selectors": [
+                                    {
+                                        "kind": "resourceWithoutLocation",
+                                        "notIn": [
+                                            "subscriptionLevelResources"
+                                        ]
+                                    },
+                                    {
+                                        "kind": "policyDefinitionReferenceId",
+                                        "in": [
+                                            "policy reference id 1",
+                                            "policy reference id 2"
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "kind": "policyEffect",
+                                "value": "Deny",
+                                "selectors": [
+                                    {
+                                        "kind": "resourceLocation",
+                                        "in": [
+                                            "australiaeast",
+                                            "australiasoutheast"
+                                        ]
+                                    },
+                                    {
+                                        "kind": "policyDefinitionReferenceId",
+                                        "in": [
+                                            "policy 1 reference id"
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    ]
+                }
+            },
+            "required": [
+                "name",
+                "policyDefinitionId",
+                "scope"
+            ]
+        }
+    },
+    "if": {
+        "required": [
+            "identity"
+        ]
+    },
+    "then": {
+        "type": "object",
+        "properties": {
+            "properties": {
+                "type": "object",
+                "properties": {
+                    "location": {
+                        "type": "string",
+                        "enum": [
+                            "australiaeast"
+                        ]
+                    }
+                },
+                "required": [
+                    "location"
+                ]
+            }
+        }
+    },
+    "additionalProperties": true
+}

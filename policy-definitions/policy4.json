@@ -1,0 +1,67 @@
+{
+    "name": "policy4",
+    "type": "Microsoft.Authorization/policyDefinitions",
+    "id": "/providers/Microsoft.Management/managementGroups/1e265494-869d-4d1e-8f63-ca8704d33218/providers/Microsoft.Authorization/policyDefinitions/policy4",
+    "properties": {
+        "displayName": "Add policy4 tag",
+        "description": "description: Adds the policy4 tag",
+        "policyType": "Custom",
+        "mode": "All",
+        "metadata": {
+            "version": "1.0.0",
+            "category": "my custom catgeory",
+            "hello": "blabla"
+        },
+        "parameters": {
+            "param_policy4_p41": {
+                "type": "String",
+                "allowedValues": [
+                    "p41"
+                ],
+                "defaultValue": "p41"
+            },
+            "param_policy4_p42": {
+                "type": "String",
+                "allowedValues": [
+                    "p42"
+                ],
+                "defaultValue": "p42"
+            }
+        },
+        "policyRule": {
+            "if": {
+                "allOf": [
+                    {
+                        "field": "type",
+                        "equals": "Microsoft.Resources/subscriptions/resourceGroups"
+                    }
+                ]
+            },
+            "then": {
+                "effect": "modify",
+                "details": {
+                    "roleDefinitionIds": [
+                        "/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c"
+                    ],
+                    "operations": [
+                        {
+                            "operation": "addOrReplace",
+                            "field": "tags['p41']",
+                            "value": "[parameters('param_policy4_p41')]"
+                        },
+                        {
+                            "operation": "addOrReplace",
+                            "field": "tags['p42']",
+                            "value": "[parameters('param_policy4_p42')]"
+                        },
+                        {
+                            "operation": "addOrReplace",
+                            "field": "tags['p43']",
+                            "value": "const_p43"
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,67 @@
+{
+    "name": "policy8",
+    "type": "Microsoft.Authorization/policyDefinitions",
+    "id": "/providers/Microsoft.Management/managementGroups/1e265494-869d-4d1e-8f63-ca8704d33218/providers/Microsoft.Authorization/policyDefinitions/policy8",
+    "properties": {
+        "displayName": "Add policy8 tag",
+        "description": "description: Adds the policy8 tag",
+        "policyType": "Custom",
+        "mode": "All",
+        "metadata": {
+            "version": "1.0.0",
+            "category": "my custom catgeory",
+            "hello": "blabla"
+        },
+        "parameters": {
+            "param_policy8_p81": {
+                "type": "String",
+                "allowedValues": [
+                    "p81"
+                ],
+                "defaultValue": "p81"
+            },
+            "param_policy8_p82": {
+                "type": "String",
+                "allowedValues": [
+                    "p82"
+                ],
+                "defaultValue": "p82"
+            }
+        },
+        "policyRule": {
+            "if": {
+                "allOf": [
+                    {
+                        "field": "type",
+                        "equals": "Microsoft.Resources/subscriptions/resourceGroups"
+                    }
+                ]
+            },
+            "then": {
+                "effect": "modify",
+                "details": {
+                    "roleDefinitionIds": [
+                        "/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c"
+                    ],
+                    "operations": [
+                        {
+                            "operation": "addOrReplace",
+                            "field": "tags['p81']",
+                            "value": "[parameters('param_policy8_p81')]"
+                        },
+                        {
+                            "operation": "addOrReplace",
+                            "field": "tags['p82']",
+                            "value": "[parameters('param_policy8_p82')]"
+                        },
+                        {
+                            "operation": "addOrReplace",
+                            "field": "tags['p83']",
+                            "value": "const_p83"
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}

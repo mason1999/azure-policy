@@ -1,0 +1,68 @@
+{
+    "name": "policy2",
+    "type": "Microsoft.Authorization/policyDefinitions",
+    "id": "/providers/Microsoft.Management/managementGroups/1e265494-869d-4d1e-8f63-ca8704d33218/providers/Microsoft.Authorization/policyDefinitions/policy2",
+    "properties": {
+        "displayName": "Add policy2 tag",
+        "description": "description: Adds the policy2 tag",
+        "policyType": "Custom",
+        "mode": "All",
+        "metadata": {
+            "version": "1.0.0",
+            "category": "my custom catgeory",
+            "hello": "blabla"
+        },
+        "parameters": {
+            "param_policy2_p21": {
+                "type": "String",
+                "allowedValues": [
+                    "p21"
+                ],
+                "defaultValue": "p21"
+            },
+            "param_policy2_p22": {
+                "type": "String",
+                "allowedValues": [
+                    "p22"
+                ],
+                "defaultValue": "p22"
+            }
+        },
+        "policyRule": {
+            "if": {
+                "allOf": [
+                    {
+                        "field": "type",
+                        "equals": "Microsoft.Resources/subscriptions/resourceGroups"
+                    }
+                ]
+            },
+            "then": {
+                "effect": "modify",
+                "details": {
+                    "roleDefinitionIds": [
+                        "/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c",
+                        "/providers/Microsoft.Authorization/roleDefinitions/1c0163c0-47e6-4577-8991-ea5c82e286e4"
+                    ],
+                    "operations": [
+                        {
+                            "operation": "addOrReplace",
+                            "field": "tags['p21']",
+                            "value": "[parameters('param_policy2_p21')]"
+                        },
+                        {
+                            "operation": "addOrReplace",
+                            "field": "tags['p22']",
+                            "value": "[parameters('param_policy2_p22')]"
+                        },
+                        {
+                            "operation": "addOrReplace",
+                            "field": "tags['p23']",
+                            "value": "const_p23"
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}

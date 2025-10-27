@@ -1,0 +1,11 @@
+{
+    "$schema": "https://json-schema.org/draft-07/schema#",
+    "oneOf": [
+        {
+            "$ref": "./Microsoft.Compute/aliases.json#/definitions/aliases"
+        },
+        {
+            "$ref": "./Microsoft.Storage/aliases.json#/definitions/aliases"
+        }
+    ]
+}

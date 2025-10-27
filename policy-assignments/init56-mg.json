@@ -1,0 +1,38 @@
+{
+    "identity": {
+        "type": "SystemAssigned"
+    },
+    "properties": {
+        "name": "init56-mg",
+        "description": "this is a test description",
+        "displayName": "init56-mg deployed",
+        "enforcementMode": "Default",
+        "definitionVersion": "1.0.*",
+        "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/1e265494-869d-4d1e-8f63-ca8704d33218/providers/Microsoft.Authorization/policySetDefinitions/init56",
+        "id": "/providers/microsoft.management/managementgroups/mason/providers/Microsoft.Authorization/policyAssignments/assignment-name",
+        "scope": "/providers/microsoft.management/managementgroups/mason",
+        "location": "australiaeast",
+        "metadata": {
+            "a": "a",
+            "b": "b",
+            "parameterScopes": {}
+        },
+        "nonComplianceMessages": [
+            {
+                "message": "This is the default noncompliance message"
+            },
+            {
+                "message": "This is the noncomplicance message for policy5",
+                "policyDefinitionReferenceId": "Add policy5"
+            },
+            {
+                "message": "This is the noncomplicance message for policy6",
+                "policyDefinitionReferenceId": "Add policy6"
+            }
+        ],
+        "notScopes": [],
+        "parameters": {},
+        "resourceSelectors": [],
+        "overrides": []
+    }
+}

@@ -1,0 +1,87 @@
+{
+    "properties": {
+        "displayName": "initiative for policy12",
+        "policyType": "Custom",
+        "description": "this is an initiative containing policy1 and policy2",
+        "metadata": {
+            "category": "custom-init",
+            "createdBy": "a",
+            "createdOn": "b",
+            "updatedBy": "c",
+            "updatedOn": "d"
+        },
+        "version": "1.0.0",
+        "parameters": {
+            "param_policy1_p11": {
+                "type": "String",
+                "defaultValue": "p11"
+            },
+            "param_policy1_p12": {
+                "type": "String",
+                "defaultValue": "p12"
+            },
+            "param_policy2_p21": {
+                "type": "String",
+                "defaultValue": "p21"
+            },
+            "param_policy2_p22": {
+                "type": "String",
+                "defaultValue": "p22"
+            }
+        },
+        "policyDefinitions": [
+            {
+                "policyDefinitionReferenceId": "Add policy1",
+                "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/1e265494-869d-4d1e-8f63-ca8704d33218/providers/Microsoft.Authorization/policyDefinitions/policy1",
+                "definitionVersion": "1.0.*",
+                "parameters": {
+                    "param_policy1_p11": {
+                        "value": "[parameters('param_policy1_p11')]"
+                    },
+                    "param_policy1_p12": {
+                        "value": "[parameters('param_policy1_p12')]"
+                    }
+                },
+                "groupNames": [
+                    "group1"
+                ]
+            },
+            {
+                "policyDefinitionReferenceId": "Add policy2",
+                "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/1e265494-869d-4d1e-8f63-ca8704d33218/providers/Microsoft.Authorization/policyDefinitions/policy2",
+                "definitionVersion": "1.0.*",
+                "parameters": {
+                    "param_policy2_p21": {
+                        "value": "[parameters('param_policy2_p21')]"
+                    },
+                    "param_policy2_p22": {
+                        "value": "[parameters('param_policy2_p22')]"
+                    }
+                },
+                "groupNames": [
+                    "group2"
+                ]
+            }
+        ],
+        "policyDefinitionGroups": [
+            {
+                "name": "group1",
+                "category": "category-group1",
+                "displayName": "group 1",
+                "description": "group contains policy1"
+            },
+            {
+                "name": "group2",
+                "category": "category-group2",
+                "displayName": "group 2",
+                "description": "group contains policy1 and policy2"
+            }
+        ],
+        "versions": [
+            "a"
+        ]
+    },
+    "id": "/providers/Microsoft.Management/managementGroups/1e265494-869d-4d1e-8f63-ca8704d33218/providers/Microsoft.Authorization/policySetDefinitions/init12",
+    "type": "Microsoft.Authorization/policySetDefinitions",
+    "name": "init12"
+}
