@@ -1,7 +1,7 @@
 {
     "name": "policy1",
     "type": "Microsoft.Authorization/policyDefinitions",
-    "id": "/providers/Microsoft.Management/managementGroups/1e265494-869d-4d1e-8f63-ca8704d33218/providers/Microsoft.Authorization/policyDefinitions/policy1",
+    "id": "/providers/Microsoft.Management/managementGroups/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/providers/Microsoft.Authorization/policyDefinitions/policy1",
     "properties": {
         "displayName": "Add policy1 tag",
         "description": "description: Adds the policy1 tag",

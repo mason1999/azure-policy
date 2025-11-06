@@ -1,0 +1,53 @@
+{
+    "properties": {
+        "displayName": "initiative for policy11 and policy12",
+        "policyType": "Custom",
+        "description": "this is an initiative containing policy11 and policy12",
+        "metadata": {
+            "category": "custom-init",
+            "createdBy": "a",
+            "createdOn": "b",
+            "updatedBy": "c",
+            "updatedOn": "d"
+        },
+        "version": "1.0.0",
+        "policyDefinitions": [
+            {
+                "policyDefinitionReferenceId": "Add policy11",
+                "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/providers/Microsoft.Authorization/policyDefinitions/policy11",
+                "definitionVersion": "1.0.*",
+                "groupNames": [
+                    "group1"
+                ]
+            },
+            {
+                "policyDefinitionReferenceId": "Add policy12",
+                "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/providers/Microsoft.Authorization/policyDefinitions/policy12",
+                "definitionVersion": "1.0.*",
+                "groupNames": [
+                    "group2"
+                ]
+            }
+        ],
+        "policyDefinitionGroups": [
+            {
+                "name": "group1",
+                "category": "category-group1",
+                "displayName": "group 1",
+                "description": "group contains policy1"
+            },
+            {
+                "name": "group2",
+                "category": "category-group2",
+                "displayName": "group 2",
+                "description": "group contains policy1 and policy2"
+            }
+        ],
+        "versions": [
+            "a"
+        ]
+    },
+    "id": "/providers/Microsoft.Management/managementGroups/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/providers/Microsoft.Authorization/policySetDefinitions/init6",
+    "type": "Microsoft.Authorization/policySetDefinitions",
+    "name": "init6"
+}

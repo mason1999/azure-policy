@@ -1,0 +1,33 @@
+{
+    "name": "policy12",
+    "type": "Microsoft.Authorization/policyDefinitions",
+    "id": "/providers/Microsoft.Management/managementGroups/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/providers/Microsoft.Authorization/policyDefinitions/policy12",
+    "properties": {
+        "displayName": "Add policy12 minmum tls version",
+        "description": "description: Adds the policy12 minumum tls version for storage accounts",
+        "policyType": "Custom",
+        "mode": "All",
+        "metadata": {
+            "version": "1.0.0",
+            "category": "my custom catgeory",
+            "hello": "blabla"
+        },
+        "policyRule": {
+            "if": {
+                "allOf": [
+                    {
+                        "field": "type",
+                        "equals": "Microsoft.Storage/storageAccounts"
+                    },
+                    {
+                        "field": "Microsoft.Storage/storageAccounts/minimumTlsVersion",
+                        "notEquals": "TLS1_2"
+                    }
+                ]
+            },
+            "then": {
+                "effect": "audit"
+            }
+        }
+    }
+}

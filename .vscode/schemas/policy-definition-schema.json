@@ -948,7 +948,7 @@
             "oneOf": [
                 {
                     "type": "string",
-                    "examples": [
+                    "enum": [
                         "name",
                         "fullName",
                         "kind",
@@ -956,9 +956,12 @@
                         "location",
                         "id",
                         "identity.type",
-                        "tags",
-                        "tags['tag_name']"
+                        "tags"
                     ]
+                },
+                {
+                    "type": "string",
+                    "pattern": "^tags\\['.*'\\]$"
                 },
                 {
                     "$ref": "./providers/aliases.json"

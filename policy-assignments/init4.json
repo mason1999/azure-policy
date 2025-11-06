@@ -1,0 +1,41 @@
+{
+    "identity": {
+        "type": "UserAssigned",
+        "userAssignedIdentities": {
+            "/subscriptions/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/resourcegroups/test-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/mi-1": {}
+        }
+    },
+    "properties": {
+        "name": "init4-assignment",
+        "description": "PLATFORM MG SCOPE",
+        "displayName": "init4-assignment deployed",
+        "enforcementMode": "Default",
+        "definitionVersion": "1.0.*",
+        "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/providers/Microsoft.Authorization/policySetDefinitions/init4",
+        "id": "/providers/microsoft.management/managementgroups/platform/providers/Microsoft.Authorization/policyAssignments/assignment-name",
+        "scope": "/providers/microsoft.management/managementgroups/platform",
+        "location": "australiaeast",
+        "metadata": {
+            "a": "a",
+            "b": "b",
+            "parameterScopes": {}
+        },
+        "nonComplianceMessages": [
+            {
+                "message": "This is the default noncompliance message"
+            },
+            {
+                "message": "This is the noncomplicance message for policy7",
+                "policyDefinitionReferenceId": "Add policy7"
+            },
+            {
+                "message": "This is the noncomplicance message for policy8",
+                "policyDefinitionReferenceId": "Add policy8"
+            }
+        ],
+        "notScopes": [],
+        "parameters": {},
+        "resourceSelectors": [],
+        "overrides": []
+    }
+}

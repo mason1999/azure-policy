@@ -1,10 +1,10 @@
 {
-    "name": "policy3",
+    "name": "policy10",
     "type": "Microsoft.Authorization/policyDefinitions",
-    "id": "/providers/Microsoft.Management/managementGroups/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/providers/Microsoft.Authorization/policyDefinitions/policy3",
+    "id": "/providers/Microsoft.Management/managementGroups/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/providers/Microsoft.Authorization/policyDefinitions/policy10",
     "properties": {
-        "displayName": "Add policy3 tag",
-        "description": "description: Adds the policy3 tag",
+        "displayName": "Add policy10 tag",
+        "description": "description: Adds the policy10 tag",
         "policyType": "Custom",
         "mode": "All",
         "metadata": {
@@ -13,19 +13,19 @@
             "hello": "blabla"
         },
         "parameters": {
-            "param_policy3_p31": {
+            "param_policy10_p101": {
                 "type": "String",
                 "allowedValues": [
-                    "p31"
+                    "p101"
                 ],
-                "defaultValue": "p31"
+                "defaultValue": "p101"
             },
-            "param_policy3_p32": {
+            "param_policy10_p102": {
                 "type": "String",
                 "allowedValues": [
-                    "p32"
+                    "p102"
                 ],
-                "defaultValue": "p32"
+                "defaultValue": "p102"
             }
         },
         "policyRule": {
@@ -46,18 +46,18 @@
                     "operations": [
                         {
                             "operation": "addOrReplace",
-                            "field": "tags['p31']",
-                            "value": "[parameters('param_policy3_p31')]"
+                            "field": "tags['p101']",
+                            "value": "[parameters('param_policy10_p101')]"
                         },
                         {
                             "operation": "addOrReplace",
-                            "field": "tags['p32']",
-                            "value": "[parameters('param_policy3_p32')]"
+                            "field": "tags['p102']",
+                            "value": "[parameters('param_policy10_p102')]"
                         },
                         {
                             "operation": "addOrReplace",
-                            "field": "tags['p33']",
-                            "value": "const_p33"
+                            "field": "tags['p103']",
+                            "value": "const_p103"
                         }
                     ]
                 }

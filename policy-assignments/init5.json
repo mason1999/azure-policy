@@ -1,0 +1,41 @@
+{
+    "identity": {
+        "type": "UserAssigned",
+        "userAssignedIdentities": {
+            "/subscriptions/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/resourcegroups/test-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/mi-2": {}
+        }
+    },
+    "properties": {
+        "name": "init5-assignment",
+        "description": "ROOT MG SCOPE",
+        "displayName": "init5-assignment deployed",
+        "enforcementMode": "Default",
+        "definitionVersion": "1.0.*",
+        "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/providers/Microsoft.Authorization/policySetDefinitions/init5",
+        "id": "/providers/microsoft.management/managementgroups/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/providers/Microsoft.Authorization/policyAssignments/assignment-name",
+        "scope": "/providers/microsoft.management/managementgroups/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX",
+        "location": "australiaeast",
+        "metadata": {
+            "a": "a",
+            "b": "b",
+            "parameterScopes": {}
+        },
+        "nonComplianceMessages": [
+            {
+                "message": "This is the default noncompliance message"
+            },
+            {
+                "message": "This is the noncomplicance message for policy9",
+                "policyDefinitionReferenceId": "Add policy9"
+            },
+            {
+                "message": "This is the noncomplicance message for policy10",
+                "policyDefinitionReferenceId": "Add policy10"
+            }
+        ],
+        "notScopes": [],
+        "parameters": {},
+        "resourceSelectors": [],
+        "overrides": []
+    }
+}

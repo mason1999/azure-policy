@@ -1,0 +1,35 @@
+{
+    "properties": {
+        "name": "init6-assignment",
+        "description": "ROOT MG SCOPE",
+        "displayName": "init6-assignment deployed",
+        "enforcementMode": "Default",
+        "definitionVersion": "1.0.*",
+        "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/providers/Microsoft.Authorization/policySetDefinitions/init6",
+        "id": "/providers/microsoft.management/managementgroups/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/providers/Microsoft.Authorization/policyAssignments/assignment-name",
+        "scope": "/providers/microsoft.management/managementgroups/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX",
+        "location": "australiaeast",
+        "metadata": {
+            "a": "a",
+            "b": "b",
+            "parameterScopes": {}
+        },
+        "nonComplianceMessages": [
+            {
+                "message": "This is the default noncompliance message"
+            },
+            {
+                "message": "This is the noncomplicance message for policy11",
+                "policyDefinitionReferenceId": "Add policy11"
+            },
+            {
+                "message": "This is the noncomplicance message for policy12",
+                "policyDefinitionReferenceId": "Add policy12"
+            }
+        ],
+        "notScopes": [],
+        "parameters": {},
+        "resourceSelectors": [],
+        "overrides": []
+    }
+}

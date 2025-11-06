@@ -9,7 +9,7 @@ var v_initiatives_mg_scope = filter(
 
 var v_initiatives_sub_scope = filter(p_initiatives, initiative => startsWith(initiative.id, '/subscriptions'))
 
-module m_mg_initiatives './modules/deploy_initiative_mg.bicep' = [
+module m_mg_initiatives './deploy_initiative_definitions/deploy_initiative_mg.bicep' = [
   for initiative in v_initiatives_mg_scope: {
     scope: managementGroup(split(initiative.id, '/')[4])
     params: {
@@ -18,7 +18,7 @@ module m_mg_initiatives './modules/deploy_initiative_mg.bicep' = [
   }
 ]
 
-module m_sub_initiatives './modules/deploy_initiative_sub.bicep' = [
+module m_sub_initiatives './deploy_initiative_definitions/deploy_initiative_sub.bicep' = [
   for initiative in v_initiatives_sub_scope: {
     scope: subscription(split(initiative.id, '/')[2])
     params: {
